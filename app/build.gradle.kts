@@ -1,3 +1,6 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 plugins {
     application
     checkstyle
@@ -23,9 +26,18 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    testLogging {
+        exceptionFormat = TestExceptionFormat.FULL
+        events = mutableSetOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
+        // showStackTraces = true
+        // showCauses = true
+        showStandardStreams = true
+    }
 }
 
 tasks.named("build") {
     dependsOn("checkstyleMain")
     dependsOn("checkstyleTest")
 }
+
+tasks.jacocoTestReport { reports { xml.required.set(true) } }
