@@ -11,7 +11,7 @@ public class StringSchema extends BaseSchema<String> {
     }
 
     public StringSchema minLength(int min) {
-        if(min <= 0) {
+        if (min <= 0) {
             throw new IllegalArgumentException("Minimal length must be positive or zero");
         }
         this.minLength = min;
@@ -19,7 +19,7 @@ public class StringSchema extends BaseSchema<String> {
     }
 
     public StringSchema contains(String substring) {
-        if(substring == null) {
+        if (substring == null) {
             throw new IllegalArgumentException("Substring can't be null");
         }
         this.requiredSubstring = substring;
@@ -32,7 +32,7 @@ public class StringSchema extends BaseSchema<String> {
             return false;
         }
 
-        if (value == null) {
+        if (value == null || value.isEmpty()) {
             return true;
         }
 
