@@ -3,7 +3,7 @@ package hexlet.code.schemas;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MapSchema extends BaseSchema<Map<?, ?>> {
+public final class MapSchema extends BaseSchema<Map<?, ?>> {
     private Integer requiredSize = null;
     private Map<String, BaseSchema<?>> shapeSchemas = new HashMap<>();
 
