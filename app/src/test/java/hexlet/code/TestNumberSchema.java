@@ -35,22 +35,44 @@ public final class TestNumberSchema {
         assertFalse(schema.isValid(-3));
         assertTrue(schema.isValid(3));
         assertFalse(schema.isValid(0));
-
     }
 
     @Test
     public void testRange() {
-        assertTrue(schema.isValid(3));
-        assertTrue(schema.isValid(6));
         schema.range(1, 4);
-        assertTrue(schema.isValid(3));
-        assertFalse(schema.isValid(6));
 
+        assertTrue(schema.isValid(1));
+        assertTrue(schema.isValid(4));
+
+        assertTrue(schema.isValid(2));
+        assertTrue(schema.isValid(3));
+
+        assertFalse(schema.isValid(0));
+        assertFalse(schema.isValid(5));
+
+    }
+
+    @Test
+    public void testCombinedValidations() {
+        schema.required()
+                .positive()
+                .range(10, 100);
+
+        assertTrue(schema.isValid(10));    // нижняя граница
+        assertTrue(schema.isValid(50));    // внутри диапазона
+        assertTrue(schema.isValid(100));   // верхняя граница
+
+        assertFalse(schema.isValid(null)); // не соответствует required
+        assertFalse(schema.isValid(-5));   // не соответствует positive
+        assertFalse(schema.isValid(0));    // не соответствует positive
+        assertFalse(schema.isValid(9));    // не соответствует range
+        assertFalse(schema.isValid(101));  // не соответствует range
     }
 
     @Test
     void testRangeValidation() {
         assertThrows(IllegalArgumentException.class, () -> schema.range(5, 3));
+        assertThrows(IllegalArgumentException.class, () -> schema.range(5, 5));
     }
 
     @Test
@@ -58,5 +80,4 @@ public final class TestNumberSchema {
         schema.positive();
         assertFalse(schema.isValid(0));
     }
-
 }

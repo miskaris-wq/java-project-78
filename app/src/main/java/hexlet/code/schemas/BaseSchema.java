@@ -1,35 +1,33 @@
 package hexlet.code.schemas;
 
-public abstract class BaseSchema<T> {
-    protected boolean isRequired = false;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
 
-    /**
-     * Marks the field as required.
-     * @return current schema instance for method chaining
-     */
+public abstract class BaseSchema<T> {
+    private boolean isRequired = false;
+    private final List<Predicate<T>> validations = new ArrayList<>();
 
     public BaseSchema<T> required() {
         this.isRequired = true;
+        addValidation(value -> value != null
+                && !(value instanceof String && ((String) value).isEmpty()));
         return this;
     }
 
-    /**
-     * Checks if value satisfies required constraint.
-     * @param value the value to check
-     * @return true if value is valid according to required constraint
-     */
-
-    protected boolean checkRequired(T value) {
-        if (!isRequired) {
-            return true;
-        }
-        return value != null && !(value instanceof String && ((String) value).isEmpty());
+    protected void addValidation(Predicate<T> validation) {
+        validations.add(validation);
     }
 
-    /**
-     * Validates the value against schema rules.
-     * @param value the value to validate
-     * @return true if value is valid
-     */
-    public abstract boolean isValid(T value);
+    public boolean isValid(T value) {
+        if (isRequired && value == null) {
+            return false;
+        }
+
+        if (value == null) {
+            return true;
+        }
+
+        return validations.stream().allMatch(v -> v.test(value));
+    }
 }

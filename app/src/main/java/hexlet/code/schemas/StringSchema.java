@@ -1,8 +1,6 @@
 package hexlet.code.schemas;
 
 public final class StringSchema extends BaseSchema<String> {
-    private int minLength = 0;
-    private String requiredSubstring;
 
     @Override
     public StringSchema required() {
@@ -14,32 +12,15 @@ public final class StringSchema extends BaseSchema<String> {
         if (min <= 0) {
             throw new IllegalArgumentException("Minimal length must be positive or zero");
         }
-        this.minLength = min;
+        addValidation(value -> value.length() >= min);
         return this;
     }
 
     public StringSchema contains(String substring) {
-        if (substring == null) {
+        if (substring == null || substring.isEmpty()) {
             throw new IllegalArgumentException("Substring can't be null");
         }
-        this.requiredSubstring = substring;
+        addValidation(value -> value.contains(substring));
         return this;
-    }
-
-    @Override
-    public boolean isValid(String value) {
-        if (!checkRequired(value)) {
-            return false;
-        }
-
-        if (value == null || value.isEmpty()) {
-            return true;
-        }
-
-        if (value.length() < minLength) {
-            return false;
-        }
-
-        return requiredSubstring == null || value.contains(requiredSubstring);
     }
 }

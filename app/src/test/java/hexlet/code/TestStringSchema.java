@@ -44,6 +44,21 @@ public final class TestStringSchema {
     }
 
     @Test
+    public void testCombinedValidations() {
+        // Проверяем что валидаторы накапливаются
+        schema.required()
+                .minLength(5)
+                .contains("let");
+
+        assertTrue(schema.isValid("hexlet"));
+
+        assertFalse(schema.isValid(null));
+        assertFalse(schema.isValid(""));
+        assertFalse(schema.isValid("hex"));
+        assertFalse(schema.isValid("hexlol"));
+    }
+
+    @Test
     void testMinLengthValidation() {
         assertThrows(IllegalArgumentException.class, () -> schema.minLength(-1));
     }
@@ -51,5 +66,6 @@ public final class TestStringSchema {
     @Test
     void testContainsValidation() {
         assertThrows(IllegalArgumentException.class, () -> schema.contains(null));
+        assertThrows(IllegalArgumentException.class, () -> schema.contains(""));
     }
 }

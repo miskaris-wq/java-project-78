@@ -32,7 +32,7 @@ public final class MapSchemaTest {
         assertFalse(schema.isValid(null));
         assertTrue(schema.isValid(new HashMap<>()));
 
-        Map<String, String> data = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
         data.put("key", "value");
         assertTrue(schema.isValid(data));
     }
@@ -41,7 +41,7 @@ public final class MapSchemaTest {
     void testSizeof() {
         schema.sizeof(2);
 
-        Map<String, String> data = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
         assertFalse(schema.isValid(data));
 
         data.put("key1", "value1");
@@ -61,31 +61,27 @@ public final class MapSchemaTest {
 
     @Test
     void testShapeValidation() {
-        Map<String, BaseSchema<String>> schemas = new HashMap<>();
+        Map<String, BaseSchema<?>> schemas = new HashMap<>();
         schemas.put("firstName", validator.string().required());
         schemas.put("lastName", validator.string().required().minLength(2));
 
         schema.shape(schemas);
 
-        // Valid case
-        Map<String, String> human1 = new HashMap<>();
+        Map<String, Object> human1 = new HashMap<>();
         human1.put("firstName", "John");
         human1.put("lastName", "Smith");
         assertTrue(schema.isValid(human1));
 
-        // Missing required field
-        Map<String, String> human2 = new HashMap<>();
+        Map<String, Object> human2 = new HashMap<>();
         human2.put("firstName", "John");
         assertFalse(schema.isValid(human2));
 
-        // Invalid last name (too short)
-        Map<String, String> human3 = new HashMap<>();
+        Map<String, Object> human3 = new HashMap<>();
         human3.put("firstName", "Anna");
         human3.put("lastName", "B");
         assertFalse(schema.isValid(human3));
 
-        // Null value for required field
-        Map<String, String> human4 = new HashMap<>();
+        Map<String, Object> human4 = new HashMap<>();
         human4.put("firstName", "John");
         human4.put("lastName", null);
         assertFalse(schema.isValid(human4));
@@ -119,23 +115,23 @@ public final class MapSchemaTest {
 
     @Test
     void testCombinedConstraints() {
-        Map<String, BaseSchema<String>> schemas = new HashMap<>();
+        Map<String, BaseSchema<?>> schemas = new HashMap<>();
         schemas.put("username", validator.string().required().contains("admin"));
         schemas.put("password", validator.string().required().minLength(8));
 
         schema.required().shape(schemas);
 
-        Map<String, String> user1 = new HashMap<>();
+        Map<String, Object> user1 = new HashMap<>();
         user1.put("username", "admin_user");
         user1.put("password", "securepassword123");
         assertTrue(schema.isValid(user1));
 
-        Map<String, String> user2 = new HashMap<>();
+        Map<String, Object> user2 = new HashMap<>();
         user2.put("username", "admin");
         user2.put("password", "short");
         assertFalse(schema.isValid(user2));
 
-        Map<String, String> user3 = new HashMap<>();
+        Map<String, Object> user3 = new HashMap<>();
         user3.put("username", "regular_user");
         user3.put("password", "longenoughpassword");
         assertFalse(schema.isValid(user3));
