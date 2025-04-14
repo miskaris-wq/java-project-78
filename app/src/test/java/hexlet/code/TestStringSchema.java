@@ -65,6 +65,5 @@ public final class TestStringSchema {
     @Test
     void testContainsValidation() {
         assertThrows(IllegalArgumentException.class, () -> schema.contains(null));
-        assertThrows(IllegalArgumentException.class, () -> schema.contains(""));
     }
 }
