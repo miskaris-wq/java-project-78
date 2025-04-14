@@ -19,7 +19,7 @@ public final class NumberSchema extends BaseSchema<Integer> {
         Objects.requireNonNull(min);
         Objects.requireNonNull(max);
 
-        if (min > max) {
+        if (min > max || min == max) {
             throw new IllegalArgumentException("Min must be less than max");
         }
 
