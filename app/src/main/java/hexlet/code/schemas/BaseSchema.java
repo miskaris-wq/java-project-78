@@ -1,8 +1,8 @@
+// BaseSchema.java
 package hexlet.code.schemas;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Predicate;
 
 public abstract class BaseSchema<T> {
@@ -15,8 +15,6 @@ public abstract class BaseSchema<T> {
 
     public BaseSchema<T> required() {
         this.isRequired = true;
-        validations.clear();
-        addValidation(Objects::nonNull);
         return this;
     }
 
