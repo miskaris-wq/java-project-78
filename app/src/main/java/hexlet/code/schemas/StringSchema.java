@@ -18,7 +18,7 @@ public final class StringSchema extends BaseSchema<String> {
     }
 
     public StringSchema contains(String substring) {
-        if (substring == null) {
+        if (substring == null || substring.isEmpty()) {
             throw new IllegalArgumentException("Substring can't be null");
         }
         addValidation(value -> value == null || value.contains(substring));
