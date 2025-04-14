@@ -3,7 +3,7 @@ package hexlet.code.schemas;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class MapSchema extends BaseSchema<Map<String, Object>> {
+public final class MapSchema<T> extends BaseSchema<Map<String, T>> {
     private Integer requiredSize = null;
     private Map<String, BaseSchema<?>> shapeSchemas = new HashMap<>();
 
@@ -28,7 +28,7 @@ public final class MapSchema extends BaseSchema<Map<String, Object>> {
         return this;
     }
 
-    private boolean validateShape(Map<String, Object> value) {
+    private boolean validateShape(Map<String, T> value) {
         return shapeSchemas.entrySet().stream()
                 .allMatch(entry -> isValidField(entry.getValue(), value.get(entry.getKey())));
     }

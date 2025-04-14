@@ -45,7 +45,6 @@ public final class TestStringSchema {
 
     @Test
     public void testCombinedValidations() {
-        // Проверяем что валидаторы накапливаются
         schema.required()
                 .minLength(5)
                 .contains("let");

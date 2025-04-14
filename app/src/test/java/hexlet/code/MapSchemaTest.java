@@ -95,19 +95,16 @@ public final class MapSchemaTest {
 
         schema.shape(schemas);
 
-        // Valid case
         Map<String, Object> person1 = new HashMap<>();
         person1.put("name", "Alice");
         person1.put("age", 25);
         assertTrue(schema.isValid(person1));
 
-        // Invalid age
         Map<String, Object> person2 = new HashMap<>();
         person2.put("name", "Bob");
         person2.put("age", -10);
         assertFalse(schema.isValid(person2));
 
-        // Missing required field
         Map<String, Object> person3 = new HashMap<>();
         person3.put("age", 30);
         assertFalse(schema.isValid(person3));
