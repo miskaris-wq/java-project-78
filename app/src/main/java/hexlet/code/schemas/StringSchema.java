@@ -12,15 +12,19 @@ public final class StringSchema extends BaseSchema<String> {
     }
 
     public StringSchema minLength(int min) {
+        if (min < 0) {
+            throw new IllegalArgumentException("Minimal length must be positive or zero");
+        }
         this.minLengthValue = min;
-        // Удаляем предыдущие проверки minLength
         addValidation(value -> value.length() >= min);
         return this;
     }
 
     public StringSchema contains(String substring) {
+        if (substring == null) {
+            throw new IllegalArgumentException("Substring can't be null");
+        }
         this.containsValue = substring;
-        // Удаляем предыдущие проверки contains
         addValidation(value -> value.contains(substring));
         return this;
     }
