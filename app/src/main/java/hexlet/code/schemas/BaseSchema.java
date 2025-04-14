@@ -1,4 +1,4 @@
-// BaseSchema.java
+
 package hexlet.code.schemas;
 
 import java.util.ArrayList;
