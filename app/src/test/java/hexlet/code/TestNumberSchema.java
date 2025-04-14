@@ -58,15 +58,15 @@ public final class TestNumberSchema {
                 .positive()
                 .range(10, 100);
 
-        assertTrue(schema.isValid(10));    // нижняя граница
-        assertTrue(schema.isValid(50));    // внутри диапазона
-        assertTrue(schema.isValid(100));   // верхняя граница
+        assertTrue(schema.isValid(10));
+        assertTrue(schema.isValid(50));
+        assertTrue(schema.isValid(100));
 
-        assertFalse(schema.isValid(null)); // не соответствует required
-        assertFalse(schema.isValid(-5));   // не соответствует positive
-        assertFalse(schema.isValid(0));    // не соответствует positive
-        assertFalse(schema.isValid(9));    // не соответствует range
-        assertFalse(schema.isValid(101));  // не соответствует range
+        assertFalse(schema.isValid(null));
+        assertFalse(schema.isValid(-5));
+        assertFalse(schema.isValid(0));
+        assertFalse(schema.isValid(9));
+        assertFalse(schema.isValid(101));
     }
 
     @Test
