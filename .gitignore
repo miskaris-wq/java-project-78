@@ -1,7 +1,4 @@
-.idea
-
-# Ignore Gradle project-specific cache directory
-.gradle
-
-# Ignore Gradle build output directory
-build
+# Игнорировать файл .DS_Store (настройки macOS)
+.DS_Store
+# Игнорировать папку .idea (настройки IntelliJ IDEA)
+/.idea/
