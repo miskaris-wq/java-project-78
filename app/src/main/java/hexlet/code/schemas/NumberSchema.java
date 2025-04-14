@@ -11,7 +11,7 @@ public final class NumberSchema extends BaseSchema<Integer> {
     }
 
     public NumberSchema positive() {
-        addValidation(value -> value > 0);
+        addValidation(value -> value == null || value > 0);
         return this;
     }
 
