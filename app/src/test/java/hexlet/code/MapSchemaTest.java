@@ -133,4 +133,20 @@ public final class MapSchemaTest {
         user3.put("password", "longenoughpassword");
         assertFalse(schema.isValid(user3));
     }
-}
+
+    /*@Test
+    public void testCombinedValidations() {
+        schema.required().sizeof(1).sizeof(2);
+        Map<String, Object> user1 = new HashMap<>();
+
+        user1.put("username", "admin_user");
+        user1.put("password", 1234);
+
+        assertTrue(schema.isValid(user1));
+
+
+        }
+
+    */
+    }
+

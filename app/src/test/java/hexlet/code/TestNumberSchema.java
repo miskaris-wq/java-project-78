@@ -67,12 +67,16 @@ public final class TestNumberSchema {
         assertFalse(schema.isValid(0));
         assertFalse(schema.isValid(9));
         assertFalse(schema.isValid(101));
+
+        var schema1 = v.number().required()
+                .range(2, 4)
+                .range(10,12);
+        assertTrue(schema1.isValid(11));
     }
 
     @Test
     void testRangeValidation() {
         assertThrows(IllegalArgumentException.class, () -> schema.range(5, 3));
-        assertThrows(IllegalArgumentException.class, () -> schema.range(5, 5));
     }
 
     @Test

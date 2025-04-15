@@ -55,6 +55,15 @@ public final class TestStringSchema {
         assertFalse(schema.isValid(""));
         assertFalse(schema.isValid("hex"));
         assertFalse(schema.isValid("hexlol"));
+
+        var schema1 = v.string().required()
+                .minLength(10)
+                .minLength(4);
+        assertTrue(schema1.isValid("hexlet"));
+        var schema2 = v.string().required()
+                .contains("let")
+                .contains("a");
+        assertFalse(schema2.isValid("hexlet"));
     }
 
     @Test
