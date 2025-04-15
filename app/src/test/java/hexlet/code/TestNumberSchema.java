@@ -49,7 +49,6 @@ public final class TestNumberSchema {
 
         assertFalse(schema.isValid(0));
         assertFalse(schema.isValid(5));
-
     }
 
     @Test
