@@ -1,11 +1,6 @@
 package hexlet.code.schemas;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public final class NumberSchema extends BaseSchema<Integer> {
-
-    private final Set<Validation<Integer>> rangeValidations = new HashSet<>();
 
     @Override
     public NumberSchema required() {
@@ -14,7 +9,7 @@ public final class NumberSchema extends BaseSchema<Integer> {
     }
 
     public NumberSchema positive() {
-        validations.add(value -> value == null || value > 0);
+        validations.put("positive", value -> value == null || value > 0);
         return this;
     }
 
@@ -22,16 +17,9 @@ public final class NumberSchema extends BaseSchema<Integer> {
         if (min > max) {
             throw new IllegalArgumentException("Min must be less than or equal to max");
         }
-        validations.removeAll(rangeValidations);
-        rangeValidations.clear();
+        validations.put("rangeMin", value -> value >= min);
+        validations.put("rangeMax", value -> value <= max);
 
-        Validation<Integer> newCheckMin = value -> value >= min;
-        rangeValidations.add(newCheckMin);
-        validations.add(newCheckMin);
-
-        Validation<Integer> newCheckMax = value -> value <= max;
-        rangeValidations.add(newCheckMax);
-        validations.add(newCheckMax);
 
         return this;
     }

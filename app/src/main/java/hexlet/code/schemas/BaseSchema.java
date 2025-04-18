@@ -1,11 +1,15 @@
 package hexlet.code.schemas;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
 
 public abstract class BaseSchema<T> {
     protected boolean isRequired = false;
-    protected List<Validation<T>> validations = new ArrayList<>();
+    protected Map<String, Predicate<T>> validations = new HashMap<>();
+
 
     /**
      * Marks the field as required.
@@ -44,8 +48,13 @@ public abstract class BaseSchema<T> {
         if (isRequired && value == null) {
             return false;
         }
-        return validations.stream().allMatch(v -> v.test(value));
+        List<Predicate<T>> list = new ArrayList<>();
+        for (String key: validations.keySet()) {
+            var v = validations.get(key);
+            list.add(v);
+
+        }
+        return list.stream().allMatch(v -> v.test(value));
 
     }
-
 }

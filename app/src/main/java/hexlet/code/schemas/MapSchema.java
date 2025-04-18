@@ -8,7 +8,7 @@ public final class MapSchema<T> extends BaseSchema<Map<String, T>> {
 
     public MapSchema shape(Map<String, BaseSchema<?>> schemas) {
         this.shapeSchemas = new HashMap<>(schemas);
-        validations.add(this::validateShape);
+        validations.put("shape", this::validateShape);
         return this;
     }
 
@@ -22,7 +22,7 @@ public final class MapSchema<T> extends BaseSchema<Map<String, T>> {
         if (size < 0) {
             throw new IllegalArgumentException("Size cannot be negative");
         }
-        validations.add(value -> value.size() == size);
+        validations.put("sizeof", value -> value.size() == size);
         return this;
     }
 
