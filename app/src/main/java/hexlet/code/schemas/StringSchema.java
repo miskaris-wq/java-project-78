@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public final class StringSchema extends BaseSchema<String> {
-    private final Set<Predicate<String>> containsValidations = new HashSet<>();
 
     @Override
     public StringSchema required() {

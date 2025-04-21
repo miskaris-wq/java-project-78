@@ -22,19 +22,6 @@ public abstract class BaseSchema<T> {
     }
 
     /**
-     * Checks if value satisfies required constraint.
-     *
-     * @param value the value to check
-     * @return true if value is valid according to required constraint
-     */
-    protected boolean checkRequired(T value) {
-        if (!isRequired) {
-            return true;
-        }
-        return value != null && !(value instanceof String && ((String) value).isEmpty());
-    }
-
-    /**
      * Validates the value against schema rules.
      *
      * @param value the value to validate
