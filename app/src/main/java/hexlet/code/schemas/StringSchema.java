@@ -1,9 +1,5 @@
 package hexlet.code.schemas;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.function.Predicate;
-
 public final class StringSchema extends BaseSchema<String> {
 
     @Override
